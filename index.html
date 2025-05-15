@@ -3,51 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quantum Yield Partners Inc.</title>
-    <link rel="stylesheet" href="styles.css">
+    <!-- Improved SEO Meta Tags -->
+    <meta name="description" content="Quantum Yield Partners Inc. - Bitcoin Treasury Company">
+    <meta name="keywords" content="Quantum Yield, Bitcoin, Treasury, Finance, Bitcoin Accumulation">
+    <title>Quantum Yield | Bitcoin Treasury Partner</title>
+    <!-- Preconnect & Preload for Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&display=swap" as="style" onload="this.rel='stylesheet'">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&display=swap" rel="stylesheet">
+    </noscript>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <canvas id="matrix"></canvas>
+    <canvas id="matrix" aria-hidden="true"></canvas>
     <main class="container">
-        <!-- ASCII Logo -->
-        <pre class="ascii-logo">
-  /₿₿₿₿₿₿  /₿₿   /₿₿  /₿₿₿₿₿₿₿  /₿₿   /₿₿ /₿₿₿₿₿₿₿₿ /₿₿   /₿₿ /₿₿      /₿₿       /₿₿     /₿₿ /₿₿₿₿₿₿ /₿₿₿₿₿₿₿₿ /₿₿       /₿₿₿₿₿₿₿       
- /₿₿__  ₿₿| ₿₿  | ₿₿ /₿₿__  ₿₿| ₿₿₿ | ₿₿|__  ₿₿__/| ₿₿  | ₿₿| ₿₿₿    /₿₿₿      |  ₿₿   /₿₿/|_  ₿₿ /| ₿₿_____/| ₿₿      | ₿�__  ₿₿      
-| ₿₿  \ ₿₿| ₿₿  | ₿₿| ₿₿  \ ₿₿| ₿₿₿₿| ₿₿   | ₿₿   | ₿₿  | ₿₿| ₿₿₿₿  /₿₿₿₿       \  ₿₿ /₿₿/   | ₿₿  | ₿₿      | ₿₿      | ₿₿  \ ₿₿      
-| ₿₿  | ₿₿| ₿₿  | ₿₿| ₿₿₿₿₿₿₿₿| ₿₿ ₿₿ ₿₿   | ₿₿   | ₿₿  | ₿₿| ₿₿ ₿₿/₿₿ ₿₿        \  ₿₿₿₿/    | ₿₿  | ₿₿₿₿₿   | ₿₿      | ₿₿  | ₿₿      
-| ₿₿  | ₿₿| ₿₿  | ₿₿| ₿₿__  ₿₿| ₿₿  ₿₿₿₿   | ₿₿   | ₿₿  | ₿₿| ₿₿  ₿₿₿| ₿₿         \  ₿₿/     | ₿₿  | ₿₿__/   | ₿₿      | ₿₿  | ₿₿      
-| ₿₿/₿₿ ₿₿| ₿₿  | ₿₿| ₿₿  | ₿₿| ₿₿\  ₿₿₿   | ₿₿   | ₿₿  | ₿�| ₿₿\  ₿ | ₿₿          | ₿₿      | ₿₿  | ₿₿      | ₿₿      | ₿₿  | ₿₿      
-|  ₿₿₿₿₿₿/|  ₿₿₿₿₿₿/| ₿₿  | ₿₿| ₿₿ \  ₿₿   | ₿₿   |  ₿₿₿₿₿₿/| ₿₿ \/  | ₿₿          | ₿₿     /₿₿₿₿₿₿| ₿₿₿₿₿₿₿₿| ₿₿₿₿₿₿₿₿| ₿₿₿₿₿₿₿/      
- \____ ₿₿₿ \______/ |__/  |__/|__/  \__/   |__/    \______/ |__/     |__/          |__/    |______/|________/|________/|_______/       
-      \__/                                                                                                                             
-        </pre>
+        <!-- ASCII Logo: Consider replacing <pre> with <figure> for semantics if desired -->
+        <figure aria-label="Quantum Yield ASCII Logo" style="margin:0;">
+            <pre class="ascii-logo" aria-hidden="true">
+  /₿₿₿₿₿₿  /₿₿   /₿₿  /₿₿₿₿₿₿₿  /₿₿   /₿₿ /₿₿₿₿₿₿₿₿ /₿₿   /₿₿ /₿₿      /₿₿       /₿₿     /₿₿ /₿₿₿₿₿₿ /₿₿₿₿₿₿₿₿
+ /₿₿__  ₿₿| ₿₿  | ₿₿ /₿₿__  ₿₿| ₿₿₿ | ₿₿|__  ₿₿__/| ₿₿  | ₿₿| ₿₿₿    /₿₿₿      |  ₿₿   /₿₿/|_  ₿₿ /| ₿₿_____/| ₿₿     /₿₿
+| ₿₿  \ ₿₿| ₿₿  | ₿₿| ₿₿  \ ₿₿| ₿₿₿₿| ₿₿   | ₿₿   | ₿₿  | ₿₿| ₿₿₿₿  /₿₿₿₿       \  ₿₿ /₿₿/   | ₿₿  | ₿₿      | ₿₿    /₿₿ 
+| ₿₿  | ₿₿| ₿₿  | ₿₿| ₿₿₿₿₿₿₿₿| ₿₿ ₿₿ ₿₿   | ₿₿   | ₿₿  | ₿₿| ₿₿ ₿₿/₿₿ ₿₿        \  ₿₿₿₿/    | ₿₿  | ₿₿₿₿₿₿  | ₿₿₿₿₿₿₿₿  
+| ₿₿  | ₿₿| ₿₿  | ₿₿| ₿₿__  ₿₿| ₿₿  ₿₿₿₿   | ₿₿   | ₿₿  | ₿₿| ₿₿  ₿₿₿| ₿₿         \  ₿₿/     | ₿₿  | ₿₿__/   | ₿₿_____/  
+| ₿₿/₿₿ ₿₿| ₿₿  | ₿₿| ₿₿  | ₿₿| ₿₿\  ₿₿₿   | ₿₿   | ₿₿  | ₿₿| ₿₿\  ₿ | ₿₿          | ₿₿      | ₿₿  | ₿₿      | ₿₿        
+|  ₿₿₿₿₿₿/|  ₿₿₿₿₿₿/| ₿₿  | ₿₿| ₿₿ \  ₿₿   | ₿₿   |  ₿₿₿₿₿₿/| ₿₿ \/  | ₿₿          | ₿₿     /₿₿₿₿₿₿| ₿₿₿₿₿₿₿₿
+ \____ ₿₿₿ \______/ |__/  |__/|__/  \__/   |__/    \______/ |__/     |__/          |__/    |______/|________/|_______/       
+      \__/                                                                                                                          
+            </pre>
+            <figcaption class="sr-only">Quantum Yield Partners ASCII logo</figcaption>
+        </figure>
 
         <!-- Main Content -->
-        <div class="content">
+        <section class="content" aria-label="Main Content">
             <p class="typing-text" data-text="QUANTUM YIELD PARTNERS INC. // BITCOIN TREASURY COMPANY"></p>
-            
             <p class="typing-text" data-text="> Initiating company..."></p>
-            
             <p class="typing-text" data-text="> Mission: Establish a Bitcoin standard across global capital markets."></p>
-            
             <p class="typing-text" data-text="> Run Bitcoin_accumulation.exe"></p>
-            
             <p class="typing-text" data-text="> Initializing X Account: @quantumyield"></p>
-            
             <p class="typing-text" data-text="> Contact: hello@quantumyieldpartners.com"></p>
-            
             <p class="typing-text" data-text="Booting... [█████░░░░░░░░░░░] 21%"></p>
-            
             <p class="typing-text" data-text="> Status: █ LIVE"></p>
-            
             <p class="blinking-text">> _</p>
-        </div>
+        </section>
 
         <!-- Footer -->
-        <footer>
+        <footer role="contentinfo">
             <div class="footer-left">
                 <a href="/privacy.html">PRIVACY</a>
                 <a href="/legal.html">LEGAL</a>
@@ -56,10 +58,11 @@
                 <p>© 2025 Quantum Yield Partners Inc. All Rights Reserved.</p>
             </div>
             <div class="footer-right">
-                <a href="https://x.com/quantumyield" target="_blank">QUANTUM YIELD</a>
+                <a href="https://x.com/quantumyield" target="_blank" rel="noopener noreferrer">QUANTUM YIELD</a>
             </div>
         </footer>
     </main>
-    <script src="script.js"></script>
+    <!-- Defer JS for better performance -->
+    <script src="script.js" defer></script>
 </body>
 </html>
