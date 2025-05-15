@@ -78,7 +78,7 @@ body {
 
 /* Typography */
 .ascii-logo {
-  color: #39FF14;      /* Matrix green */
+  color: #fff;      /* white */
   font-family: 'Fira Mono', 'Consolas', 'Monaco', monospace;
   font-size: 1em;
   line-height: 1.1;
