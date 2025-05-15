@@ -2,8 +2,8 @@
 
 // ===== CONFIGURATION =====
 const MATRIX_CONFIG = {
-    characters: "1₿",                  // Characters for Matrix effect
-    fontSize: 14,                      // Font size in px
+    characters: "₿",                  // Characters for Matrix effect
+    fontSize: 16,                      // Font size in px
     color: "#3B82F6",                  // Matrix text color
     bgFade: "rgba(0, 0, 0, 0.008)", // Lower alpha for less fade, matrix trails last longer
     animationSpeed: 0.25,                 // Can be tuned for faster/slower rain
@@ -38,7 +38,7 @@ function initMatrixRain() {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         ctx.fillStyle = MATRIX_CONFIG.color;
-        ctx.font = `${fontSize}px monospace`;
+        ctx.font = `bold ${fontSize}px monospace`;
 
         for (let i = 0; i < drops.length; i++) {
             const text = MATRIX_CONFIG.characters.charAt(
