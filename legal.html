@@ -1,38 +1,44 @@
-<!-- ========== legal.html ========== -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Legal information for Quantum Yield Partners Inc. including company details, disclaimers, risk disclosures, and legal contact.">
     <title>Legal Information | Quantum Yield</title>
-    <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&display=swap" as="style" onload="this.rel='stylesheet'">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <canvas id="matrix"></canvas>
-    <main class="container subpage">
-        <a href="/" class="close-button">✕</a>
-        
-        <h1>Legal Information</h1>
-        
-        <div class="content">
+    <canvas id="matrix" aria-hidden="true"></canvas>
+    <main class="container subpage" role="main">
+        <a href="/" class="close-button" aria-label="Close legal information page">&times;</a>
+        <section class="content" aria-label="Legal Information">
+            <h1>Legal Information</h1>
             <p>Quantum Yield Partners Inc. is committed to compliance with all applicable laws and regulations governing our operations and the services we provide.</p>
-            
             <h2>Company Information</h2>
             <p>Quantum Yield Partners Inc. is a registered corporation in [Jurisdiction]. Our principal place of business is [Address].</p>
-            
             <h2>Disclaimer</h2>
-            <p>The information provided on this website does not constitute investment advice, financial advice, trading advice, or any other sort of advice and you should not treat any of the website's content as such.</p>
-            
+            <p>The information provided on this website does not constitute investment advice, financial advice, trading advice, or any other sort of advice, and you should not treat any of the website's content as such.</p>
             <h2>Risk Disclosure</h2>
             <p>Investing in Bitcoin and other digital assets involves a high degree of risk. The risk of loss in trading or holding digital assets can be substantial.</p>
-            
             <h2>Contact</h2>
             <p>For any legal inquiries, please contact us at <a href="mailto:hello@quantumyieldpartners.com">hello@quantumyieldpartners.com</a>.</p>
-        </div>
+        </section>
+        <footer>
+            <div class="footer-left">
+                <a href="/privacy.html">PRIVACY</a>
+                <a href="/legal.html">LEGAL</a>
+            </div>
+            <div class="footer-center">
+                <p>© 2025 Quantum Yield Partners Inc. All Rights Reserved.</p>
+            </div>
+            <div class="footer-right">
+                <a href="https://x.com/quantumyield" target="_blank" rel="noopener noreferrer">QUANTUM YIELD</a>
+            </div>
+        </footer>
     </main>
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 </html>
