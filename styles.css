@@ -78,13 +78,16 @@ body {
 
 /* Typography */
 .ascii-logo {
-    font-family: 'Inconsolata', monospace;
-    font-size: 1.2rem;
-    color: var(--text-color);
-    text-align: center;
-    margin-bottom: 2rem;
-    line-height: 1.2;
-    white-space: pre;
+  color: #39FF14;      /* Matrix green */
+  font-family: 'Fira Mono', 'Consolas', 'Monaco', monospace;
+  font-size: 1em;
+  line-height: 1.1;
+  text-align: left;
+  background: transparent;
+  margin: 0 auto;
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 .content {
