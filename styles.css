@@ -16,7 +16,9 @@ body {
     margin: 0;
     padding: 0;
     line-height: 1.6;
-    overflow: hidden;
+    /* overflow: hidden; */    /* REMOVE or COMMENT OUT this line */
+    overflow-x: hidden;        /* Prevents horizontal scrolling */
+    overflow-y: auto;          /* Allows vertical scrolling */
     position: relative;
 }
 
