@@ -1,67 +1,104 @@
 // ========== script.js ==========
-// Matrix rain effect
-const canvas = document.getElementById('matrix');
-if (canvas) {
+
+// ===== CONFIGURATION =====
+const MATRIX_CONFIG = {
+    characters: "01",                  // Characters for Matrix effect
+    fontSize: 14,                      // Font size in px
+    color: "#3B82F6",                  // Matrix text color
+    bgFade: "rgba(0, 0, 0, 0.05)",     // Fade effect color
+    animationSpeed: 1,                 // Can be tuned for faster/slower rain
+    accessibilityToggle: true          // Set true to allow disabling animation
+};
+
+const TYPING_CONFIG = {
+    delayBetween: 300,                 // Delay between typing elements (ms)
+    charInterval: 50,                  // Typing speed per character (ms)
+    initialDelay: 1000                 // Delay before typing starts (ms)
+};
+
+// ===== MATRIX RAIN EFFECT =====
+function initMatrixRain() {
+    const canvas = document.getElementById('matrix');
+    if (!canvas) return;
+
     const ctx = canvas.getContext('2d');
+    let fontSize = MATRIX_CONFIG.fontSize;
+    let columns, drops;
 
     function setCanvasSize() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+        columns = Math.floor(canvas.width / fontSize);
+        drops = Array(columns).fill(1);
     }
-
     setCanvasSize();
 
-    const characters = "01";
-    const fontSize = 14;
-    let columns = Math.floor(canvas.width / fontSize);
-    let drops = Array(columns).fill(1);
-
     function draw() {
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillStyle = MATRIX_CONFIG.bgFade;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        ctx.fillStyle = '#3B82F6';
-        ctx.font = fontSize + 'px monospace';
+        ctx.fillStyle = MATRIX_CONFIG.color;
+        ctx.font = `${fontSize}px monospace`;
 
         for (let i = 0; i < drops.length; i++) {
-            const text = characters.charAt(Math.floor(Math.random() * characters.length));
+            const text = MATRIX_CONFIG.characters.charAt(
+                Math.floor(Math.random() * MATRIX_CONFIG.characters.length)
+            );
             ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
             if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
                 drops[i] = 0;
             }
-
-            drops[i]++;
+            drops[i] += MATRIX_CONFIG.animationSpeed;
         }
     }
 
-    function resizeMatrix() {
-        setCanvasSize();
-        columns = Math.floor(canvas.width / fontSize);
-        drops = Array(columns).fill(1);
-    }
-
-    window.addEventListener('resize', () => {
-        // Debounce for performance
-        clearTimeout(window._matrixResizeTimeout);
-        window._matrixResizeTimeout = setTimeout(resizeMatrix, 150);
-    });
-
-    // Use requestAnimationFrame for smoother animation
+    let animationFrameId = null;
     function animate() {
         draw();
-        requestAnimationFrame(animate);
+        animationFrameId = requestAnimationFrame(animate);
     }
-    requestAnimationFrame(animate);
+
+    // Debounced resize
+    let resizeTimeout;
+    function onResize() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            setCanvasSize();
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }, 150);
+    }
+
+    // Accessibility: allow users to disable animation (e.g., via keyboard)
+    function setupAccessibility() {
+        if (!MATRIX_CONFIG.accessibilityToggle) return;
+        window.addEventListener('keydown', (e) => {
+            if (e.key === "Escape") {
+                cancelAnimationFrame(animationFrameId);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+        });
+    }
+
+    window.addEventListener('resize', onResize);
+    setupAccessibility();
+    animationFrameId = requestAnimationFrame(animate);
 }
 
-// Typing animation with sequential effect
+// ===== TYPING ANIMATION =====
 function typeTextSequentially() {
     const elements = document.querySelectorAll('.typing-text');
-    let delay = 0;
-    const typeOne = (element, text, done) => {
+    if (!elements.length) return;
+
+    function typeOne(element, text, done) {
         element.textContent = '';
+        element.style.borderRight = '2px solid'; // Optional: blinking cursor effect
+
         let i = 0;
+        const typingInterval = element.getAttribute('data-speed')
+            ? parseInt(element.getAttribute('data-speed'), 10)
+            : TYPING_CONFIG.charInterval;
+
         const typing = setInterval(() => {
             if (i < text.length) {
                 element.textContent += text.charAt(i);
@@ -71,19 +108,23 @@ function typeTextSequentially() {
                 element.style.borderRight = 'none';
                 if (done) done();
             }
-        }, 50);
-    };
+        }, typingInterval);
+    }
 
-    // Sequentially type out each element
     function typeNext(index) {
         if (index >= elements.length) return;
         const element = elements[index];
-        const text = element.getAttribute('data-text') || '';
-        typeOne(element, text, () => typeNext(index + 1));
+        const text = element.getAttribute('data-text') || element.textContent || '';
+        typeOne(element, text, () => {
+            setTimeout(() => typeNext(index + 1), TYPING_CONFIG.delayBetween);
+        });
     }
+
     typeNext(0);
 }
 
-window.addEventListener('load', () => {
-    setTimeout(typeTextSequentially, 1000);
+// ===== INITIALIZATION =====
+window.addEventListener('DOMContentLoaded', () => {
+    initMatrixRain();
+    setTimeout(typeTextSequentially, TYPING_CONFIG.initialDelay);
 });
