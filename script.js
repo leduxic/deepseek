@@ -6,7 +6,7 @@ const MATRIX_CONFIG = {
     fontSize: 14,                      // Font size in px
     color: "#3B82F6",                  // Matrix text color
     bgFade: "rgba(0, 0, 0, 0.02)", // Lower alpha for less fade, matrix trails last longer
-    animationSpeed: 0.4,                 // Can be tuned for faster/slower rain
+    animationSpeed: 0.2,                 // Can be tuned for faster/slower rain
     accessibilityToggle: true          // Set true to allow disabling animation
 };
 
