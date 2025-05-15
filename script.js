@@ -38,7 +38,7 @@ function initMatrixRain() {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         ctx.fillStyle = MATRIX_CONFIG.color;
-        ctx.font = `bold ${fontSize}px monospace`;
+        ctx.font = `${fontSize}px monospace`;
 
         for (let i = 0; i < drops.length; i++) {
             const text = MATRIX_CONFIG.characters.charAt(
