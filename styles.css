@@ -42,6 +42,7 @@ body {
     height: 100%;
     z-index: -1;
     opacity: 0.3;
+    pointer-events: none;
 }
 
 .container {
@@ -131,10 +132,24 @@ body {
   width: 1ch;
   animation: blink 1s steps(1) infinite;
 }
-@keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
+
+.typing-line {
+    font-family: 'Fira Mono', 'Consolas', 'Monaco', monospace;
+    font-size: 1.1em;
+    white-space: pre;
+    color: var(--text-color);
+    border-right: 2px solid var(--accent-color); /* typing caret */
+    min-height: 1.3em;
+    margin-bottom: 0.15em;
+    animation: blink-caret 1s steps(2, start) infinite;
+    overflow: hidden;
+    letter-spacing: 0.01em;
 }
+
+@keyframes blink-caret {
+    0%, 100% { border-right-color: var(--accent-color);}
+    50% { border-right-color: transparent;}
+}}
 
 .live-indicator {
     color: var(--accent-color);
