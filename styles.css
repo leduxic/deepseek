@@ -99,31 +99,7 @@ body {
     max-width: 800px;
 }
 
-.typing-text {
-    font-family: 'Fira Mono', 'Consolas', 'Monaco', monospace;
-    font-size: 1.1em;
-    margin-bottom: 0.9em;
-    white-space: pre;
-    border-right: 2px solid var(--accent-color);
-    overflow: hidden;
-    display: block;
-}
-
-/* If you want the animated caret only on the full (block) lines, keep border-right in .typing-text only */
-
-.terminal-cursor {
-  font-family: inherit;
-  font-size: 1em;
-  margin-top: 0.35em;
-  padding-left: 0.1em;
-}
-
-.blinking-cursor {
-  display: inline-block;
-  width: 1ch;
-  animation: blink 1s steps(1) infinite;
-}
-
+/* === NEW TYPING ANIMATION === */
 .typing-line {
     font-family: 'Fira Mono', 'Consolas', 'Monaco', monospace;
     font-size: 1.1em;
