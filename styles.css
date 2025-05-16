@@ -78,13 +78,13 @@ body {
 
 /* Typography */
 .ascii-logo {
-  color: #fff;      /* white */
+  color: #fff;
   font-family: 'Fira Mono', 'Consolas', 'Monaco', monospace;
   font-size: 1em;
   line-height: 1.1;
   text-align: center;
   background: transparent;
-  margin: 0 auto;
+  margin: 0 auto 2.5rem auto;  /* This line adds more space below the logo */
   display: block;
   max-width: 100%;
   overflow-x: auto;
