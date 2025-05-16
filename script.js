@@ -12,8 +12,8 @@ const MATRIX_CONFIG = {
 
 const TYPING_CONFIG = {
     delayBetween: 300,                 // Delay between typing elements (ms)
-    charInterval: 50,                  // Typing speed per character (ms)
-    initialDelay: 1000                 // Delay before typing starts (ms)
+    charInterval: 30,                  // Typing speed per character (ms)
+    initialDelay: 800                 // Delay before typing starts (ms)
 };
 
 // ===== MATRIX RAIN EFFECT =====
