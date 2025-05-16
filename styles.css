@@ -105,13 +105,19 @@ body {
     white-space: pre;
     border-right: 2px solid var(--accent-color);
     overflow: hidden;
-    display: block;           /* Changed from inline-block */
+    display: block;
 }
 
-.delayed-typing {
-  /* Optionally, hide by default if you want JS to control visibility */
-  /* display: inline-block; */
+/* For staged lines inside .typing-step, force inline display for both spans */
+.typing-step .typing-text,
+.typing-step .delayed-typing {
+    display: inline;
+    border-right: none; /* Optional: removes caret from label, keep if you want caret only on full lines */
+    margin: 0;
+    padding: 0;
 }
+
+/* If you want the animated caret only on the full (block) lines, keep border-right in .typing-text only */
 
 .terminal-cursor {
   font-family: inherit;
