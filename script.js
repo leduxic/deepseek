@@ -143,4 +143,5 @@ function typeTextSequentially() {
 // ===== INITIALIZATION =====
 window.addEventListener('DOMContentLoaded', () => {
     setTimeout(typeTextSequentially, TYPING_CONFIG.initialDelay);
+    initMatrixRain();
 });
