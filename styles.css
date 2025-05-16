@@ -108,13 +108,26 @@ body {
     display: block;           /* Changed from inline-block */
 }
 
-.blinking-text {
-    animation: blink 1s step-end infinite;
+.delayed-typing {
+  /* Optionally, hide by default if you want JS to control visibility */
+  /* display: inline-block; */
 }
 
+.terminal-cursor {
+  font-family: inherit;
+  font-size: 1em;
+  margin-top: 0.35em;
+  padding-left: 0.1em;
+}
+
+.blinking-cursor {
+  display: inline-block;
+  width: 1ch;
+  animation: blink 1s steps(1) infinite;
+}
 @keyframes blink {
-    from, to { opacity: 1; }
-    50% { opacity: 0; }
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
 }
 
 .live-indicator {
