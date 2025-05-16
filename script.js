@@ -85,46 +85,68 @@ function initMatrixRain() {
     animationFrameId = requestAnimationFrame(animate);
 }
 
-// ===== TYPING ANIMATION =====
+// Typing animation configuration
+const TYPING_CONFIG = {
+    charInterval: 32,        // typing speed per character in ms
+    delayBetween: 350,       // delay between lines in ms
+    initialDelay: 400,       // delay before starting animation
+};
+
+// Typing effect for staged (main + delayed) and normal lines
 function typeTextSequentially() {
-    const elements = document.querySelectorAll('.typing-text');
-    if (!elements.length) return;
+    const items = Array.from(document.querySelectorAll('.typing-text, .typing-step'));
+    if (!items.length) return;
 
-    function typeOne(element, text, done) {
+    function typeOne(element, text, done, speed) {
         element.textContent = '';
-        element.style.borderRight = '2px solid'; // Optional: blinking cursor effect
-
         let i = 0;
-        const typingInterval = element.getAttribute('data-speed')
-            ? parseInt(element.getAttribute('data-speed'), 10)
-            : TYPING_CONFIG.charInterval;
-
         const typing = setInterval(() => {
             if (i < text.length) {
                 element.textContent += text.charAt(i);
                 i++;
             } else {
                 clearInterval(typing);
-                element.style.borderRight = 'none';
                 if (done) done();
             }
-        }, typingInterval);
+        }, speed || TYPING_CONFIG.charInterval);
+    }
+
+    function typeStepGroup(stepDiv, done) {
+        const main = stepDiv.querySelector('.typing-text');
+        const delayed = stepDiv.querySelector('.delayed-typing');
+        if (!main || !delayed) { done(); return; }
+        // Type the main part
+        typeOne(main, main.getAttribute('data-text'), () => {
+            // Small pause, then type the delayed part
+            setTimeout(() => {
+                typeOne(delayed, delayed.getAttribute('data-text'), done);
+            }, 350);
+        });
     }
 
     function typeNext(index) {
-        if (index >= elements.length) return;
-        const element = elements[index];
-        const text = element.getAttribute('data-text') || element.textContent || '';
-        typeOne(element, text, () => {
-            setTimeout(() => typeNext(index + 1), TYPING_CONFIG.delayBetween);
-        });
+        if (index >= items.length) {
+            // After all typing, show blinking cursor
+            const cursor = document.querySelector('.terminal-cursor');
+            if (cursor) cursor.style.visibility = 'visible';
+            return;
+        }
+        const el = items[index];
+        if (el.classList.contains('typing-step')) {
+            typeStepGroup(el, () => setTimeout(() => typeNext(index + 1), TYPING_CONFIG.delayBetween));
+        } else {
+            typeOne(el, el.getAttribute('data-text'), () => setTimeout(() => typeNext(index + 1), TYPING_CONFIG.delayBetween));
+        }
     }
+
+    // Hide blinking cursor initially
+    const cursor = document.querySelector('.terminal-cursor');
+    if (cursor) cursor.style.visibility = 'hidden';
 
     typeNext(0);
 }
 
 // ===== INITIALIZATION =====
 window.addEventListener('DOMContentLoaded', () => {
-    initMatrixRain();
     setTimeout(typeTextSequentially, TYPING_CONFIG.initialDelay);
 });
