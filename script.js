@@ -107,4 +107,7 @@ function typeLinesSequentially() {
   typeNextLine(0);
 }
 
-window.addEventListener('DOMContentLoaded', typeLinesSequentially);
+window.addEventListener('DOMContentLoaded', () => {
+  typeLinesSequentially();
+  initMatrixRain();
+});
