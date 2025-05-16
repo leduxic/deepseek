@@ -109,15 +109,6 @@ body {
     display: block;
 }
 
-/* For staged lines inside .typing-step, force inline display for both spans */
-.typing-step .typing-text,
-.typing-step .delayed-typing {
-    display: inline;
-    border-right: none; /* Optional: removes caret from label, keep if you want caret only on full lines */
-    margin: 0;
-    padding: 0;
-}
-
 /* If you want the animated caret only on the full (block) lines, keep border-right in .typing-text only */
 
 .terminal-cursor {
@@ -149,7 +140,7 @@ body {
 @keyframes blink-caret {
     0%, 100% { border-right-color: var(--accent-color);}
     50% { border-right-color: transparent;}
-}}
+}
 
 .live-indicator {
     color: var(--accent-color);
