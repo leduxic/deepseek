@@ -101,7 +101,7 @@ body {
 .typing-text {
     font-family: 'Fira Mono', 'Consolas', 'Monaco', monospace;
     font-size: 1.1em;
-    margin-bottom: 0.1em;
+    margin-bottom: 0.5em;
     white-space: pre;
     border-right: 2px solid var(--accent-color);
     overflow: hidden;
