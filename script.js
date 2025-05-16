@@ -10,12 +10,6 @@ const MATRIX_CONFIG = {
     accessibilityToggle: true          // Set true to allow disabling animation
 };
 
-const TYPING_CONFIG = {
-    delayBetween: 300,                 // Delay between typing elements (ms)
-    charInterval: 30,                  // Typing speed per character (ms)
-    initialDelay: 800                 // Delay before typing starts (ms)
-};
-
 // ===== MATRIX RAIN EFFECT =====
 function initMatrixRain() {
     const canvas = document.getElementById('matrix');
