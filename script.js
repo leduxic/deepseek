@@ -79,69 +79,32 @@ function initMatrixRain() {
     animationFrameId = requestAnimationFrame(animate);
 }
 
-// Typing animation configuration
-const TYPING_CONFIG = {
-    charInterval: 32,        // typing speed per character in ms
-    delayBetween: 350,       // delay between lines in ms
-    initialDelay: 400,       // delay before starting animation
-};
+function typeLinesSequentially() {
+  const lines = document.querySelectorAll('#typing-sequence .typing-line');
+  const charInterval = 32; // Typing speed (ms)
+  const delayBetween = 350; // Delay after each line (ms)
 
-// Typing effect for staged (main + delayed) and normal lines
-function typeTextSequentially() {
-    const items = Array.from(document.querySelectorAll('.typing-text, .typing-step'));
-    if (!items.length) return;
+  function typeLine(line, done) {
+    const text = line.getAttribute('data-text');
+    let i = 0;
+    line.textContent = '';
+    const typing = setInterval(() => {
+      if (i < text.length) {
+        line.textContent += text.charAt(i);
+        i++;
+      } else {
+        clearInterval(typing);
+        if (done) done();
+      }
+    }, charInterval);
+  }
 
-    function typeOne(element, text, done, speed) {
-        element.textContent = '';
-        let i = 0;
-        const typing = setInterval(() => {
-            if (i < text.length) {
-                element.textContent += text.charAt(i);
-                i++;
-            } else {
-                clearInterval(typing);
-                if (done) done();
-            }
-        }, speed || TYPING_CONFIG.charInterval);
-    }
+  function typeNextLine(index) {
+    if (index >= lines.length) return;
+    typeLine(lines[index], () => setTimeout(() => typeNextLine(index + 1), delayBetween));
+  }
 
-    function typeStepGroup(stepDiv, done) {
-        const main = stepDiv.querySelector('.typing-text');
-        const delayed = stepDiv.querySelector('.delayed-typing');
-        if (!main || !delayed) { done(); return; }
-        // Type the main part
-        typeOne(main, main.getAttribute('data-text'), () => {
-            // Small pause, then type the delayed part
-            setTimeout(() => {
-                typeOne(delayed, delayed.getAttribute('data-text'), done);
-            }, 350);
-        });
-    }
-
-    function typeNext(index) {
-        if (index >= items.length) {
-            // After all typing, show blinking cursor
-            const cursor = document.querySelector('.terminal-cursor');
-            if (cursor) cursor.style.visibility = 'visible';
-            return;
-        }
-        const el = items[index];
-        if (el.classList.contains('typing-step')) {
-            typeStepGroup(el, () => setTimeout(() => typeNext(index + 1), TYPING_CONFIG.delayBetween));
-        } else {
-            typeOne(el, el.getAttribute('data-text'), () => setTimeout(() => typeNext(index + 1), TYPING_CONFIG.delayBetween));
-        }
-    }
-
-    // Hide blinking cursor initially
-    const cursor = document.querySelector('.terminal-cursor');
-    if (cursor) cursor.style.visibility = 'hidden';
-
-    typeNext(0);
+  typeNextLine(0);
 }
 
-// ===== INITIALIZATION =====
-window.addEventListener('DOMContentLoaded', () => {
-    setTimeout(typeTextSequentially, TYPING_CONFIG.initialDelay);
-    initMatrixRain();
-});
+window.addEventListener('DOMContentLoaded', typeLinesSequentially);
