@@ -99,20 +99,29 @@ body {
     max-width: 800px;
 }
 
-/* === NEW TYPING ANIMATION === */
+/* === TYPING ANIMATION === */
 .typing-line {
     font-family: 'Fira Mono', 'Consolas', 'Monaco', monospace;
     font-size: 1.1em;
     white-space: pre;
     color: var(--text-color);
-    border-right: 2px solid var(--accent-color); /* typing caret */
     min-height: 1.3em;
     margin-bottom: 0.15em;
-    animation: blink-caret 1s steps(2, start) infinite;
     overflow: hidden;
     letter-spacing: 0.01em;
+    /* Remove border-right and animation here! */
 }
 
+/* Caret for typing animation */
+.caret {
+    display: inline-block;
+    width: 1ch;
+    border-right: 2px solid var(--accent-color);
+    animation: blink-caret 1s steps(2, start) infinite;
+    height: 1em;
+    margin-left: -2px;
+    vertical-align: bottom;
+}
 @keyframes blink-caret {
     0%, 100% { border-right-color: var(--accent-color);}
     50% { border-right-color: transparent;}
