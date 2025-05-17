@@ -1,6 +1,7 @@
 // ========== script.js ==========
 
 // ===== CONFIGURATION =====
+console.log("Script loaded!");
 const MATRIX_CONFIG = {
     characters: "₿",                  // Characters for Matrix effect
     fontSize: 26,                      // Font size in px
