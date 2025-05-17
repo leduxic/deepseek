@@ -84,19 +84,34 @@ function typeLinesSequentially() {
   const charInterval = 32; // Typing speed (ms)
   const delayBetween = 350; // Delay after each line (ms)
 
+  function typeLinesSequentially() {
+  const lines = document.querySelectorAll('#typing-sequence .typing-line');
+  const charInterval = 32; // Typing speed (ms)
+  const delayBetween = 350; // Delay after each line (ms)
+
   function typeLine(line, done) {
-  const text = line.getAttribute('data-text');
-  let i = 0;
-  line.innerHTML = '';
-  const typing = setInterval(() => {
-    if (i < text.length) {
-      line.innerHTML += text.charAt(i);
-      i++;
-    } else {
-      clearInterval(typing);
-      if (done) done();
-    }
-  }, charInterval);
+    const text = line.getAttribute('data-text');
+    let i = 0;
+    line.innerHTML = '';
+    const typing = setInterval(() => {
+      if (i < text.length) {
+        line.innerHTML += text.charAt(i);
+        i++;
+      } else {
+        clearInterval(typing);
+        // Add blinking underscore at the end as HTML
+        line.innerHTML += "<span class='blinking-underscore'>_</span>";
+        if (done) done();
+      }
+    }, charInterval);
+  }
+
+  function typeNextLine(index) {
+    if (index >= lines.length) return;
+    typeLine(lines[index], () => setTimeout(() => typeNextLine(index + 1), delayBetween));
+  }
+
+  typeNextLine(0);
 }
 
   function typeNextLine(index) {
