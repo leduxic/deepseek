@@ -87,14 +87,19 @@ const delayBetween = 320;        // ms delay between lines
 function typeLine(line, done) {
     const text = line.getAttribute('data-text');
     let i = 0;
-    line.innerHTML = '';
+    line.innerHTML = '<span class="typed"></span><span class="caret"></span>';
+    const typedSpan = line.querySelector('.typed');
+    const caretSpan = line.querySelector('.caret');
+    caretSpan.textContent = '|'; // You can use border style in CSS instead
+
     const typing = setInterval(() => {
         if (i < text.length) {
-            line.innerHTML += text.charAt(i);
+            typedSpan.textContent += text.charAt(i);
             i++;
         } else {
             clearInterval(typing);
-            // No blinking underscore/cursor is added!
+            // Remove caret from this line, move to next line in sequence
+            caretSpan.remove();
             if (done) done();
         }
     }, charInterval);
