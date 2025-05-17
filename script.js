@@ -3,10 +3,10 @@
 // ===== CONFIGURATION =====
 const MATRIX_CONFIG = {
     characters: "₿",                  // Characters for Matrix effect
-    fontSize: 16,                      // Font size in px
+    fontSize: 24,                      // Font size in px
     color: "#3B82F6",                  // Matrix text color
     bgFade: "rgba(0, 0, 0, 0.03)", // Lower alpha for less fade, matrix trails last longer
-    animationSpeed: 0.25,                 // Can be tuned for faster/slower rain
+    animationSpeed: 0.2,                 // Can be tuned for faster/slower rain
     accessibilityToggle: true          // Set true to allow disabling animation
 };
 
