@@ -207,3 +207,12 @@ footer {
         font-size: 0.9rem;
     }
 }
+
+.blinking-underscore {
+  animation: blink-underscore 1s steps(2, start) infinite;
+}
+
+@keyframes blink-underscore {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
