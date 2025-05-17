@@ -92,7 +92,6 @@ function typeLine(line, done) {
       clearInterval(typing);
       // Only add blinking underscore if this is the last line
       if (line === document.querySelector("#typing-sequence .typing-line:last-child")) {
-        line.innerHTML += "<span class='blinking-underscore'>_</span>";
       }
       if (done) done();
     }
