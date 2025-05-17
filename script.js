@@ -85,19 +85,19 @@ function typeLinesSequentially() {
   const delayBetween = 350; // Delay after each line (ms)
 
   function typeLine(line, done) {
-    const text = line.getAttribute('data-text');
-    let i = 0;
-    line.textContent = '';
-    const typing = setInterval(() => {
-      if (i < text.length) {
-        line.textContent += text.charAt(i);
-        i++;
-      } else {
-        clearInterval(typing);
-        if (done) done();
-      }
-    }, charInterval);
-  }
+  const text = line.getAttribute('data-text');
+  let i = 0;
+  line.innerHTML = '';
+  const typing = setInterval(() => {
+    if (i < text.length) {
+      line.innerHTML += text.charAt(i);
+      i++;
+    } else {
+      clearInterval(typing);
+      if (done) done();
+    }
+  }, charInterval);
+}
 
   function typeNextLine(index) {
     if (index >= lines.length) return;
