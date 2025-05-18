@@ -114,8 +114,43 @@ function typeLinesSequentially() {
     typeNextLine(0);
 }
 
+// ===== EASTER EGG TRIGGER =====
+function setupEasterEggTrigger() {
+    const logo = document.querySelector('.ascii-logo');
+    if (!logo) return; // Safeguard if logo not found
+
+    let clickCount = 0;
+    let clickTimeout;
+
+    logo.addEventListener('click', () => {
+        clickCount++;
+        clearTimeout(clickTimeout);
+
+        // Reset if not clicked 3 times quickly
+        clickTimeout = setTimeout(() => {
+            clickCount = 0;
+        }, 1000);
+
+        if (clickCount === 3) {
+            window.location.href = 'matrix-maze.html';
+        }
+    });
+
+    // Keyboard shortcut: Press "M" 3 times quickly
+    let keyCount = 0, keyTimeout;
+    window.addEventListener('keydown', (e) => {
+        if (e.key.toLowerCase() === 'm') {
+            keyCount++;
+            clearTimeout(keyTimeout);
+            keyTimeout = setTimeout(() => { keyCount = 0; }, 1000);
+            if (keyCount === 3) window.location.href = 'matrix-maze.html';
+        }
+    });
+}
+
 // ===== INIT ON PAGE LOAD =====
 window.addEventListener('DOMContentLoaded', () => {
     typeLinesSequentially();
     initMatrixRain();
+    setupEasterEggTrigger(); // <-- This line ensures the Easter egg is initialized!
 });
