@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escape The Matrix | Quantum Yield</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .maze-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 1rem;
+        }
+        #maze-canvas {
+            border: 2px solid var(--accent-color, #3B82F6);
+            background-color: var(--bg-color, #000);
+            box-sizing: border-box;
+            width: 90vw;
+            max-width: 400px;
+            height: 90vw;
+            max-height: 400px;
+            touch-action: none; /* For mobile swipe */
+        }
+        .maze-instructions {
+            color: var(--text-color, #fff);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .maze-button {
+            background: none;
+            border: 1px solid var(--accent-color, #3B82F6);
+            color: var(--text-color, #fff);
+            padding: 0.5rem 1rem;
+            margin: 0.5rem 0.25rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 4px;
+        }
+        .maze-button:hover, .maze-button:focus {
+            background: var(--accent-color, #3B82F6);
+            color: var(--bg-color, #000);
+        }
+        .mobile-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 1rem;
+            user-select: none;
+        }
+        .mobile-row {
+            display: flex;
+            justify-content: center;
+        }
+        .control-btn {
+            width: 48px;
+            height: 48px;
+            margin: 4px;
+            background: var(--bg-color, #000);
+            color: var(--accent-color, #3B82F6);
+            border: 2px solid var(--accent-color, #3B82F6);
+            border-radius: 8px;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: manipulation;
+        }
+        .control-btn:active {
+            background: var(--accent-color, #3B82F6);
+            color: var(--bg-color, #000);
+        }
+        @media (min-width: 401px) {
+            #maze-canvas {
+                width: 400px;
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="maze-container" aria-label="Maze Game">
+        <h1 class="maze-instructions">ESCAPE THE MATRIX</h1>
+        <p class="maze-instructions">Use <strong>arrow keys</strong> or <strong>WASD</strong> to move. Collect ₿ 5 times to escape.<br>
+        On mobile, use the controls below!</p>
+        <canvas id="maze-canvas" width="400" height="400" tabindex="0" aria-label="Maze Game"></canvas>
+        <div class="mobile-controls" aria-label="Mobile Controls">
+            <div class="mobile-row">
+                <button class="control-btn" id="btn-up" aria-label="Up">▲</button>
+            </div>
+            <div class="mobile-row">
+                <button class="control-btn" id="btn-left" aria-label="Left">◀</button>
+                <button class="control-btn" id="btn-down" aria-label="Down">▼</button>
+                <button class="control-btn" id="btn-right" aria-label="Right">▶</button>
+            </div>
+        </div>
+        <div>
+            <button class="maze-button" id="restart-button">RESTART</button>
+            <a href="/" class="maze-button">RETURN TO SITE</a>
+        </div>
+    </main>
+    <script src="maze-game.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
