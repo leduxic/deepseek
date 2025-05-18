@@ -32,7 +32,14 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Game state
-    let player, bitcoin, walls, score, direction, nextDirection, gameOver, gameInterval;
+    let player = null,
+        bitcoin = null,
+        walls = [], // Fix: initialize as empty array
+        score = 0,
+        direction = 'right',
+        nextDirection = 'right',
+        gameOver = false,
+        gameInterval = null;
 
     function generateWalls() {
         walls = [];
@@ -71,6 +78,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function draw() {
+        // Fix: Don't draw if walls or player/bitcoin are not yet initialized
+        if (!Array.isArray(walls) || !player || !bitcoin) return;
+
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         // Draw walls
         ctx.fillStyle = config.wallColor;
@@ -164,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (escaped) {
             // WIN: Hide maze, show win overlay
-            canvas.style.opacity = 0.1; // or 0 if you want it invisible
+            canvas.style.opacity = 0.1;
             winOverlay.style.display = 'flex';
         } else {
             // LOSE: Show game over on canvas
