@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
             score++;
             // Quick effect on collect
             setTimeout(() => {}, 50);
-            if (score >= 5) {
+            if (score >= 2) {
                 return endGame(true);
             }
             placeBitcoin();
