@@ -34,12 +34,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Game state
     let player = null,
         bitcoin = null,
-        walls = [], // Fix: initialize as empty array
+        walls = [],
         score = 0,
         direction = 'right',
         nextDirection = 'right',
         gameOver = false,
         gameInterval = null;
+
+    // Track TRY AGAIN? clickable area
+    let tryAgainArea = null;
 
     function generateWalls() {
         walls = [];
@@ -78,9 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function draw() {
-        // Fix: Don't draw if walls or player/bitcoin are not yet initialized
         if (!Array.isArray(walls) || !player || !bitcoin) return;
-
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         // Draw walls
         ctx.fillStyle = config.wallColor;
@@ -128,14 +129,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function update() {
         if (gameOver) return;
-        // Move player
         direction = nextDirection;
 
-        // Add current position to trail
         player.trail.push({x: player.x, y: player.y});
         if (player.trail.length > 5) player.trail.shift();
 
-        // Move
         switch (direction) {
             case 'up':    player.y--; break;
             case 'down':  player.y++; break;
@@ -143,22 +141,17 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'right': player.x++; break;
         }
 
-        // Wall collision
         for (const wall of walls) {
             if (player.x === wall.x && player.y === wall.y) return endGame(false);
         }
-        // Trail collision (optional, not classic snake)
         for (const segment of player.trail) {
             if (player.x === segment.x && player.y === segment.y) return endGame(false);
         }
-        // Out of bounds
         if (player.x < 0 || player.x >= config.gridSize || player.y < 0 || player.y >= config.gridSize) {
             return endGame(false);
         }
-        // Bitcoin collision
         if (player.x === bitcoin.x && player.y === bitcoin.y) {
             score++;
-            // Quick effect on collect
             setTimeout(() => {}, 50);
             if (score >= 2) {
                 return endGame(true);
@@ -173,21 +166,76 @@ document.addEventListener('DOMContentLoaded', () => {
         gameOver = true;
 
         if (escaped) {
-            // WIN: Hide maze, show win overlay
             canvas.style.opacity = 0.1;
             winOverlay.style.display = 'flex';
+            tryAgainArea = null;
         } else {
-            // LOSE: Show game over on canvas
+            // Game over screen with TRY AGAIN? clickable
             ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = '#EF4444';
             ctx.font = '24px monospace';
             ctx.textAlign = 'center';
             ctx.fillText('GAME OVER', canvas.width/2, canvas.height/2 - 20);
-            ctx.fillText('TRY AGAIN?', canvas.width/2, canvas.height/2 + 20);
+
+            // Draw TRY AGAIN? and store clickable area
+            const tryText = 'TRY AGAIN?';
+            const x = canvas.width/2;
+            const y = canvas.height/2 + 20;
+            ctx.fillText(tryText, x, y);
+
+            // Calculate clickable area for TRY AGAIN?
+            const metrics = ctx.measureText(tryText);
+            const width = metrics.width;
+            const height = 28; // approx height for 24px font
+            tryAgainArea = {
+                x: x - width/2,
+                y: y - height/2,
+                width: width,
+                height: height
+            };
+
             ctx.textAlign = 'left';
         }
     }
+
+    // Click on TRY AGAIN? to restart
+    canvas.addEventListener('click', function(e) {
+        if (gameOver && tryAgainArea) {
+            const rect = canvas.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const clickY = e.clientY - rect.top;
+            if (
+                clickX >= tryAgainArea.x &&
+                clickX <= tryAgainArea.x + tryAgainArea.width &&
+                clickY >= tryAgainArea.y &&
+                clickY <= tryAgainArea.y + tryAgainArea.height
+            ) {
+                initGame();
+            }
+        }
+    });
+
+    // Cursor pointer on TRY AGAIN? hover
+    canvas.addEventListener('mousemove', function(e) {
+        if (gameOver && tryAgainArea) {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+            if (
+                mouseX >= tryAgainArea.x &&
+                mouseX <= tryAgainArea.x + tryAgainArea.width &&
+                mouseY >= tryAgainArea.y &&
+                mouseY <= tryAgainArea.y + tryAgainArea.height
+            ) {
+                canvas.style.cursor = 'pointer';
+            } else {
+                canvas.style.cursor = 'default';
+            }
+        } else {
+            canvas.style.cursor = 'default';
+        }
+    });
 
     // Input handling
     const directions = {
@@ -200,7 +248,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (gameOver) return;
         const dir = directions[e.key];
         if (!dir) return;
-        // Prevent reversing
         if ((dir === 'up' && direction === 'down') ||
             (dir === 'down' && direction === 'up') ||
             (dir === 'left' && direction === 'right') ||
@@ -209,9 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
     }
 
-    // Mobile/Touch Controls
     function handleControl(dir) {
-        // Prevent reversing
         if ((dir === 'up' && direction === 'down') ||
             (dir === 'down' && direction === 'up') ||
             (dir === 'left' && direction === 'right') ||
@@ -252,16 +297,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Init & restart logic
     function initGame() {
-        // Reset WIN overlay and canvas opacity on restart
         winOverlay.style.display = 'none';
         canvas.style.opacity = 1;
-
         player = { x: 1, y: 1, trail: [] };
         bitcoin = { x: 0, y: 0 };
         score = 0;
         direction = 'right';
         nextDirection = 'right';
         gameOver = false;
+        tryAgainArea = null;
         generateWalls();
         placeBitcoin();
         draw();
@@ -275,7 +319,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Responsive canvas
     function resizeCanvas() {
-        // Keep it square and not more than 400px
         const size = Math.min(window.innerWidth * 0.9, 400);
         canvas.width = size;
         canvas.height = size;
@@ -285,12 +328,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Start game on load
     resizeCanvas();
-    // Show START overlay and wait for click to start
     startOverlay.style.display = 'flex';
     canvas.style.opacity = 1;
     winOverlay.style.display = 'none';
 
-    // Auto-focus the START button for accessibility
     startBtn.focus();
 
     startBtn.onclick = function() {
