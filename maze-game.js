@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.getElementById('maze-canvas');
     const ctx = canvas.getContext('2d');
+    const startOverlay = document.getElementById('maze-start-overlay');
+    const startBtn = document.getElementById('maze-start-btn');
+    const winOverlay = document.getElementById('maze-win-overlay');
+    const homeBtn = document.getElementById('maze-home-btn');
     const restartBtn = document.getElementById('restart-button');
 
     // Mobile controls
@@ -8,6 +12,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnDown = document.getElementById('btn-down');
     const btnLeft = document.getElementById('btn-left');
     const btnRight = document.getElementById('btn-right');
+
+    // Set homeBtn.onclick only once!
+    homeBtn.onclick = function() {
+        window.location.href = '/'; // change if your home page is different
+    };
 
     // Game config
     const config = {
@@ -152,19 +161,22 @@ document.addEventListener('DOMContentLoaded', () => {
     function endGame(escaped) {
         clearInterval(gameInterval);
         gameOver = true;
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = escaped ? '#3B82F6' : '#EF4444';
-        ctx.font = '24px monospace';
-        ctx.textAlign = 'center';
+
         if (escaped) {
-            ctx.fillText('CONGRATULATIONS!', canvas.width/2, canvas.height/2 - 20);
-            ctx.fillText('YOU ESCAPED THE MATRIX', canvas.width/2, canvas.height/2 + 20);
+            // WIN: Hide maze, show win overlay
+            canvas.style.opacity = 0.1; // or 0 if you want it invisible
+            winOverlay.style.display = 'flex';
         } else {
+            // LOSE: Show game over on canvas
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#EF4444';
+            ctx.font = '24px monospace';
+            ctx.textAlign = 'center';
             ctx.fillText('GAME OVER', canvas.width/2, canvas.height/2 - 20);
             ctx.fillText('TRY AGAIN?', canvas.width/2, canvas.height/2 + 20);
+            ctx.textAlign = 'left';
         }
-        ctx.textAlign = 'left';
     }
 
     // Input handling
@@ -230,6 +242,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Init & restart logic
     function initGame() {
+        // Reset WIN overlay and canvas opacity on restart
+        winOverlay.style.display = 'none';
+        canvas.style.opacity = 1;
+
         player = { x: 1, y: 1, trail: [] };
         bitcoin = { x: 0, y: 0 };
         score = 0;
@@ -259,5 +275,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Start game on load
     resizeCanvas();
-    initGame();
+    // Show START overlay and wait for click to start
+    startOverlay.style.display = 'flex';
+    canvas.style.opacity = 1;
+    winOverlay.style.display = 'none';
+
+    // Auto-focus the START button for accessibility
+    startBtn.focus();
+
+    startBtn.onclick = function() {
+        startOverlay.style.display = 'none';
+        canvas.style.opacity = 1;
+        initGame();
+    };
 });
