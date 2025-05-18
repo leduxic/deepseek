@@ -86,6 +86,15 @@
         <p class="maze-instructions">Use <strong>arrow keys</strong> or <strong>WASD</strong> to move. Collect ₿ 5 times to escape.<br>
         On mobile, use the controls below!</p>
         <canvas id="maze-canvas" width="400" height="400" tabindex="0" aria-label="Maze Game"></canvas>
+        <!-- START Overlay -->
+<div id="maze-start-overlay" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;z-index:1000;">
+  <button id="maze-start-btn" style="font-size:2rem;padding:1.2rem 2.5rem;">START</button>
+</div>
+<!-- WIN Overlay -->
+<div id="maze-win-overlay" style="position:fixed;top:0;left:0;width:100vw;height:100vh;display:none;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,0.95);z-index:1001;">
+  <div style="color:#3B82F6;font-size:2rem;text-align:center;margin-bottom:2rem;">CONGRATULATIONS!<br/>YOU ESCAPED THE MATRIX</div>
+  <button id="maze-home-btn" style="font-size:1.5rem;padding:0.8rem 2.4rem;">Return to Home Page</button>
+</div>
         <div class="mobile-controls" aria-label="Mobile Controls">
             <div class="mobile-row">
                 <button class="control-btn" id="btn-up" aria-label="Up">▲</button>
