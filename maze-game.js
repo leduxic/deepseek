@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (player.x === bitcoin.x && player.y === bitcoin.y) {
             score++;
             setTimeout(() => {}, 50);
-            if (score >= 2) {
+            if (score >= 5) {
                 return endGame(true);
             }
             placeBitcoin();
