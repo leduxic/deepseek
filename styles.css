@@ -1,6 +1,6 @@
 html, body {
-    max-width: 100vw;
-    overflow-x: hidden;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 /* ========== styles.css ========== */
@@ -21,8 +21,9 @@ body {
     margin: 0;
     padding: 0;
     line-height: 1.6;
-    overflow-x: hidden;
-    overflow-y: auto;
+    /* overflow: hidden; */    /* REMOVE or COMMENT OUT this line */
+    overflow-x: hidden;        /* Prevents horizontal scrolling */
+    overflow-y: auto;          /* Allows vertical scrolling */
     position: relative;
 }
 
@@ -50,7 +51,7 @@ body {
 }
 
 .container {
-    max-width: 100%;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
     min-height: 100vh;
@@ -58,7 +59,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: rgba(0,0,0,0.3);
+    background: rgba(0,0,0,0.3); /* Added subtle background for readability */
     box-shadow: 0 2px 16px rgba(0,0,0,0.25);
 }
 
@@ -83,24 +84,24 @@ body {
 
 /* Typography */
 .ascii-logo {
-    color: #fff;
-    font-family: 'Fira Mono', 'Consolas', 'Monaco', monospace;
-    font-size: clamp(0.5rem, 2.5vw, 1rem);
-    line-height: 1.1;
-    text-align: center;
-    background: transparent;
-    margin: 0 auto 2.5rem auto;
-    display: block;
-    max-width: 100%;
-    overflow-x: auto;
-    white-space: pre;
-    -webkit-overflow-scrolling: touch;
+  color: #fff;
+  font-family: 'Fira Mono', 'Consolas', 'Monaco', monospace;
+  font-size: min(4vw, 1em);
+  line-height: 1.1;
+  text-align: center;
+  background: transparent;
+  margin: 0 auto 2.5rem auto;
+  display: block;
+  max-width: 100vw;
+  overflow-x: auto;
+  white-space: pre;      /* Ensures no wrapping, but allows scroll */
+  -webkit-overflow-scrolling: touch;
 }
 
 img, canvas, pre {
-    max-width: 100%;
-    height: auto;
-    display: block;
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 .content {
@@ -114,13 +115,14 @@ img, canvas, pre {
 /* === TYPING ANIMATION === */
 .typing-line {
     font-family: 'Fira Mono', 'Consolas', 'Monaco', monospace;
-    font-size: clamp(0.8rem, 2.5vw, 1.1em);
-    white-space: pre-wrap;
+    font-size: 1.1em;
+    white-space: pre;
     color: var(--text-color);
     min-height: 1.3em;
     margin-bottom: 0.15em;
     overflow: hidden;
     letter-spacing: 0.01em;
+    /* Remove border-right and animation here! */
 }
 
 /* Caret for typing animation */
@@ -164,7 +166,7 @@ footer {
     margin-top: 3rem;
     padding-top: 1rem;
     border-top: 1px solid var(--divider-color);
-    font-size: clamp(0.7rem, 2vw, 0.9rem);
+    font-size: 0.9rem;
 }
 
 .footer-left, .footer-right {
@@ -187,11 +189,11 @@ footer {
 /* Responsive Design */
 @media (max-width: 768px) {
     .container {
-        padding: 1rem;
+        padding: 1.5rem;
     }
 
     .ascii-logo {
-        font-size: clamp(0.4rem, 2vw, 0.9rem);
+        font-size: 0.9rem;
     }
 
     .content {
@@ -216,71 +218,55 @@ footer {
 
 @media (max-width: 480px) {
     .container {
-        padding: 0.5rem;
+        padding: 1rem;
     }
 
     .ascii-logo {
-        font-size: clamp(0.3rem, 1.5vw, 0.7rem);
+        font-size: 0.7rem;
     }
 
     .content {
         font-size: 0.9rem;
     }
 
-    .typing-line {
-        font-size: clamp(0.6rem, 2vw, 0.9rem);
-        white-space: normal;
-    }
-
-    .btc-progress-bar {
-        height: 20px;
-    }
-
     .maze-button,
     .control-btn {
-        padding: 1rem 1.5rem;
-        font-size: 1.2rem;
-        min-width: 44px;
-        min-height: 44px;
+      padding: 1rem 1.5rem;
+      font-size: 1.2rem;
+      min-width: 44px;
+      min-height: 44px;
     }
 }
 
+/* Extra small screens */
 @media (max-width: 350px) {
     .container {
         padding: 0.25rem;
     }
-
-    .ascii-logo {
-        font-size: clamp(0.2rem, 1vw, 0.5rem);
-    }
 }
 
 .btc-progress-bar {
-    background: #222;
-    border-radius: 8px;
-    height: 24px;
-    width: 100%;
-    max-width: 350px;
-    margin: 10px 0 6px 0;
-    overflow: hidden;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.14);
+  background: #222;
+  border-radius: 8px;
+  height: 24px;
+  width: 350px;
+  margin: 10px 0 6px 0;
+  overflow: hidden;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.14);
 }
-
 .btc-progress-fill {
-    background: linear-gradient(90deg, #f7931a 0%, #ffcc80 100%);
-    height: 100%;
-    width: 0;
-    transition: width 0.7s;
+  background: linear-gradient(90deg, #f7931a 0%, #ffcc80 100%);
+  height: 100%;
+  width: 0;
+  transition: width 0.7s;
 }
-
 #btc-progress-label {
-    font-family: 'Fira Mono', 'Consolas', 'Monaco', monospace;
-    color: #ffe082;
-    font-size: 1.05em;
-    margin-bottom: 3px;
+  font-family: 'Fira Mono', 'Consolas', 'Monaco', monospace;
+  color: #ffe082;
+  font-size: 1.05em;
+  margin-bottom: 3px;
 }
-
 .btc-progress-note {
-    color: #aaa;
-    font-size: 0.93em;
+  color: #aaa;
+  font-size: 0.93em;
 }
