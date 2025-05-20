@@ -90,11 +90,12 @@ body {
   line-height: 1.1;
   text-align: center;
   background: transparent;
-  margin: 0 auto 2.5rem auto;  /* This line adds more space below the logo */
+  margin: 0 auto 2.5rem auto;
   display: block;
-  max-width: 100%;
+  max-width: 100vw;
   overflow-x: auto;
-  white-space: pre;
+  white-space: pre;      /* Ensures no wrapping, but allows scroll */
+  -webkit-overflow-scrolling: touch;
 }
 
 img, canvas, pre {
