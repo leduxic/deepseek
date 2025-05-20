@@ -91,6 +91,12 @@ body {
   overflow-x: auto;
 }
 
+img, canvas, pre {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
 .content {
     text-align: left;
     font-family: 'Inconsolata', monospace;
@@ -215,6 +221,13 @@ footer {
     .content {
         font-size: 0.9rem;
     }
+}
+.maze-button,
+.control-btn {
+  padding: 1rem 1.5rem;
+  font-size: 1.2rem;
+  min-width: 44px;
+  min-height: 44px;
 }
 
 .btc-progress-bar {
