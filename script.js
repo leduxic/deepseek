@@ -93,16 +93,18 @@ function typeLine(line, done) {
     caretSpan.textContent = '|'; // You can use border style in CSS instead
 
     const typing = setInterval(() => {
-        if (i < text.length) {
-            typedSpan.textContent += text.charAt(i);
-            i++;
-        } else {
-            clearInterval(typing);
-            // Remove caret from this line, move to next line in sequence
-            caretSpan.remove();
-            if (done) done();
-        }
-    }, charInterval);
+    if (i < text.length) {
+        typedSpan.textContent += text.charAt(i);
+        i++;
+    } else {
+        clearInterval(typing);
+        // Remove caret from this line, move to next line in sequence
+        caretSpan.remove();
+        // Make HTML (like links) render after typing is complete
+        line.innerHTML = line.getAttribute('data-text');
+        if (done) done();
+    }
+}, charInterval);
 }
 
 function typeLinesSequentially() {
